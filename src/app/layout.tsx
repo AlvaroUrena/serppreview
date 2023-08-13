@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/header'
+import Footer from '@/components/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,10 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es'>
-      <body className={inter.className}>
+      <body
+        className={
+          inter.className + ' bg-gradient-to-tr from-background to-accent'
+        }
+      >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           <Header />
           <main className='min-h-screen'>{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

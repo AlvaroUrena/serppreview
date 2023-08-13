@@ -11,17 +11,19 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { minLength, object, string } from 'valibot'
+import { minLength, object, string, url } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 
 import { useSiteContext } from '@/contexts/site-context'
 
 const formSchema = object({
-  url: string('Your email must be a string.', [
-    minLength(4, 'Please enter a valid URL')
+  url: string('Please enter the URL', [url('Please enter a valid URL')]),
+  title: string('Please enter the Title', [
+    minLength(4, 'Please enter a valid title')
   ]),
-  title: string([minLength(4, 'Please enter a valid title')]),
-  description: string([minLength(4, 'Please enter a valid description')])
+  description: string('Please enter the Description', [
+    minLength(4, 'Please enter a valid description')
+  ])
 })
 
 export default function FormElement() {
@@ -44,13 +46,11 @@ export default function FormElement() {
                   placeholder='Enter the URL'
                   {...field}
                   onBlur={() => form.trigger('url')}
+                  onChangeCapture={() => setUrl(form.getValues().url)}
                   size={60}
-                  onChange={e => setUrl(e.target.value)}
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>Example: https://site.com</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -66,10 +66,11 @@ export default function FormElement() {
                   placeholder='Enter the Title'
                   {...field}
                   onBlur={() => form.trigger('title')}
+                  onChangeCapture={() => setTitle(form.getValues().title)}
                 />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Example: The Ultimate Guide to SEO in 2023
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -86,10 +87,15 @@ export default function FormElement() {
                   placeholder='Enter the Description'
                   {...field}
                   onBlur={() => form.trigger('description')}
+                  onChangeCapture={() =>
+                    setDescription(form.getValues().description)
+                  }
                 />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Example: An SEO marketing strategy is a comprehensive plan to
+                get more visitors to your website through search engines.
+                Successful SEO includes on-page ...
               </FormDescription>
               <FormMessage />
             </FormItem>

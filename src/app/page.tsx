@@ -16,7 +16,7 @@ export default function Home() {
         <Separator className='h-2 rounded-md' />
       </section>
       <SiteContextProvider>
-        <div className='mx-auto block max-w-[1400px] grid-cols-2 place-items-center items-start gap-2 px-6 md:grid'>
+        <div className='mx-auto block max-w-[1400px] grid-cols-2 place-items-center items-start gap-24 px-6 md:grid'>
           <FormElement />
           <Preview />
         </div>

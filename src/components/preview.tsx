@@ -8,7 +8,7 @@ export default function Preview() {
     useSiteContext()
 
   return (
-    <section className='select-none rounded-md border-2 border-border bg-[#1f2125]'>
+    <section className='mt-12 select-none rounded-md border-2 border-border bg-[#1f2125] md:mt-0'>
       <header className='p-2 pb-1'>
         <Image
           src='/images/google_search.png'
