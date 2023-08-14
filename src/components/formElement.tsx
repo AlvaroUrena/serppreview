@@ -11,12 +11,17 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { minLength, object, string, url } from 'valibot'
+import { minLength, object, string, url, regex } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useSiteContext } from '@/contexts/site-context'
 
+const domainRegex =
+  /^(?!https?:\/\/)(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,})(?:\/.*)?$/
+
 const formSchema = object({
-  domain: string('Please enter the URL', [url('Please enter a valid URL')]),
+  domain: string('Please enter the Domain', [
+    regex(domainRegex, 'Please enter a valid Domain')
+  ]),
   url: string('Please enter the URL', [url('Please enter a valid URL')]),
   title: string('Please enter the Title', [
     minLength(4, 'Please enter a valid title')
@@ -34,8 +39,10 @@ export default function FormElement() {
     setUrl,
     title,
     setTitle,
+    titleWidth,
     description,
-    setDescription
+    setDescription,
+    descriptionWidth
   } = useSiteContext()
   const form = useForm({
     resolver: valibotResolver(formSchema),
@@ -101,7 +108,7 @@ export default function FormElement() {
           name='title'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Title {titleWidth}</FormLabel>
               <FormControl>
                 <Input
                   placeholder='Enter the Title'
@@ -125,7 +132,7 @@ export default function FormElement() {
           name='description'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Description {descriptionWidth}</FormLabel>
               <FormControl>
                 <Input
                   placeholder='Enter the Description'
