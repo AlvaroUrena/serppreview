@@ -11,11 +11,12 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { ClipboardCopy, ClipboardCheck } from 'lucide-react'
+import { ClipboardCopy, ClipboardCheck, ClipboardX } from 'lucide-react'
 
 export default function Code() {
   const { title, description } = useSiteContext()
   const [copied, setCopied] = useState<boolean>(false)
+  const [copyError, setCopyError] = useState<boolean>(false)
 
   const code = `<html>
   <head>
@@ -26,14 +27,22 @@ export default function Code() {
 </html>`
 
   const copyToClipboard = () => {
+    let errorTimeout: ReturnType<typeof setTimeout> | null = null
+
+    // Reset copy error
+    if (errorTimeout) clearTimeout(errorTimeout)
+    setCopyError(false)
+
+    // Copy
     navigator.clipboard
       .writeText(code)
       .then(() => {
         setCopied(true)
-        setTimeout(() => setCopied(false), 2000) // Reset copied state after 1.5 seconds
+        setTimeout(() => setCopied(false), 2000) // Reset copied state after 2 seconds
       })
       .catch(err => {
-        console.error('Error copying to clipboard:', err)
+        setCopyError(true)
+        errorTimeout = setTimeout(() => setCopyError(false), 5000) // Reset copy error state after 5 seconds
       })
   }
 
@@ -48,7 +57,9 @@ export default function Code() {
           <Tooltip>
             <TooltipTrigger className='absolute right-0 top-0'>
               <Button variant='outline' size='icon' onClick={copyToClipboard}>
-                {copied ? (
+                {copyError ? (
+                  <ClipboardX className='h-4 w-4' />
+                ) : copied ? (
                   <ClipboardCheck className='h-4 w-4' />
                 ) : (
                   <ClipboardCopy className='h-4 w-4' />
@@ -56,7 +67,11 @@ export default function Code() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Copy</p>
+              <p>
+                {copyError
+                  ? 'Has ocurred and error while trying to copy the code'
+                  : 'Copy'}
+              </p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
