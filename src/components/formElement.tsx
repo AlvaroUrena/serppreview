@@ -13,7 +13,6 @@ import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { minLength, object, string, url } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
-
 import { useSiteContext } from '@/contexts/site-context'
 
 const formSchema = object({
@@ -30,8 +29,14 @@ export default function FormElement() {
   const { url, setUrl, title, setTitle, description, setDescription } =
     useSiteContext()
   const form = useForm({
-    resolver: valibotResolver(formSchema)
+    resolver: valibotResolver(formSchema),
+    defaultValues: {
+      url,
+      title,
+      description
+    }
   })
+
   return (
     <Form {...form}>
       <form className='space-y-4'>
@@ -45,8 +50,11 @@ export default function FormElement() {
                 <Input
                   placeholder='Enter the URL'
                   {...field}
-                  onBlur={() => form.trigger('url')}
-                  onChangeCapture={() => setUrl(form.getValues().url)}
+                  onChange={e => {
+                    field.onChange(e)
+                    setUrl(e.target.value)
+                    form.trigger('url')
+                  }}
                   size={60}
                 />
               </FormControl>
@@ -65,8 +73,11 @@ export default function FormElement() {
                 <Input
                   placeholder='Enter the Title'
                   {...field}
-                  onBlur={() => form.trigger('title')}
-                  onChangeCapture={() => setTitle(form.getValues().title)}
+                  onChange={e => {
+                    field.onChange(e)
+                    setTitle(e.target.value)
+                    form.trigger('title')
+                  }}
                 />
               </FormControl>
               <FormDescription>
@@ -86,10 +97,11 @@ export default function FormElement() {
                 <Input
                   placeholder='Enter the Description'
                   {...field}
-                  onBlur={() => form.trigger('description')}
-                  onChangeCapture={() =>
-                    setDescription(form.getValues().description)
-                  }
+                  onChange={e => {
+                    field.onChange(e)
+                    setDescription(e.target.value)
+                    form.trigger('description')
+                  }}
                 />
               </FormControl>
               <FormDescription>

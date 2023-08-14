@@ -1,3 +1,13 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy - SERP Preview',
+  robots: {
+    index: false,
+    nocache: true
+  }
+}
+
 export default function PrivacyPolicy() {
   return (
     <section className='mx-auto max-w-[1400px] p-6'>

@@ -17,7 +17,7 @@ export default function Preview() {
           height={200}
         />
       </header>
-      <main className='h-96 pl-[8.2dvw]'>
+      <main className='h-96 pl-[140px]'>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta sequi
           at culpa animi maxime porro libero amet alias, hic beatae ducimus modi
