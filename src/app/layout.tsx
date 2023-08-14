@@ -26,7 +26,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           <Header />
-          <main className='min-h-screen'>{children}</main>
+          <main className='min-h-screen p-2'>{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

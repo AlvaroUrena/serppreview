@@ -7,6 +7,8 @@ type SiteContextProviderProps = {
 }
 
 type SiteContext = {
+  domain: string
+  setDomain: React.Dispatch<React.SetStateAction<string>>
   url: string
   setUrl: React.Dispatch<React.SetStateAction<string>>
   title: string
@@ -20,6 +22,7 @@ export const SiteContext = createContext<SiteContext | null>(null)
 export default function SiteContextProvider({
   children
 }: SiteContextProviderProps) {
+  const [domain, setDomain] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -27,6 +30,8 @@ export default function SiteContextProvider({
   return (
     <SiteContext.Provider
       value={{
+        domain,
+        setDomain,
         url,
         setUrl,
         title,

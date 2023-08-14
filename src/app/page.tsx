@@ -25,19 +25,21 @@ export default function Home() {
         <Separator className='h-2 rounded-md' />
       </section>
       <SiteContextProvider>
-        <div className='mx-auto block max-w-[1400px] grid-cols-2 place-items-center items-start gap-24 px-6 md:grid'>
-          <Tabs defaultValue='form' className='w-full'>
-            <TabsList>
-              <TabsTrigger value='form'>Form</TabsTrigger>
-              <TabsTrigger value='code'>Code</TabsTrigger>
-            </TabsList>
-            <TabsContent value='form'>
-              <FormElement />
-            </TabsContent>
-            <TabsContent value='code'>
-              <Code />
-            </TabsContent>
-          </Tabs>
+        <div className='mx-auto block max-w-[1400px] grid-cols-2 place-items-center items-start px-6 md:grid md:gap-8 lg:gap-24'>
+          <section className='w-full'>
+            <Tabs defaultValue='form'>
+              <TabsList>
+                <TabsTrigger value='form'>Form</TabsTrigger>
+                <TabsTrigger value='code'>Code</TabsTrigger>
+              </TabsList>
+              <TabsContent value='form'>
+                <FormElement />
+              </TabsContent>
+              <TabsContent value='code'>
+                <Code />
+              </TabsContent>
+            </Tabs>
+          </section>
           <Preview />
         </div>
       </SiteContextProvider>

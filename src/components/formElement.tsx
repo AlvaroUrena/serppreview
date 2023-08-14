@@ -16,6 +16,7 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useSiteContext } from '@/contexts/site-context'
 
 const formSchema = object({
+  domain: string('Please enter the URL', [url('Please enter a valid URL')]),
   url: string('Please enter the URL', [url('Please enter a valid URL')]),
   title: string('Please enter the Title', [
     minLength(4, 'Please enter a valid title')
@@ -26,11 +27,20 @@ const formSchema = object({
 })
 
 export default function FormElement() {
-  const { url, setUrl, title, setTitle, description, setDescription } =
-    useSiteContext()
+  const {
+    domain,
+    setDomain,
+    url,
+    setUrl,
+    title,
+    setTitle,
+    description,
+    setDescription
+  } = useSiteContext()
   const form = useForm({
     resolver: valibotResolver(formSchema),
     defaultValues: {
+      domain,
       url,
       title,
       description
@@ -40,6 +50,29 @@ export default function FormElement() {
   return (
     <Form {...form}>
       <form className='space-y-4'>
+        <FormField
+          control={form.control}
+          name='domain'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Domain</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder='Enter the Domain'
+                  {...field}
+                  onChange={e => {
+                    field.onChange(e)
+                    setDomain(e.target.value)
+                    form.trigger('domain')
+                  }}
+                  size={60}
+                />
+              </FormControl>
+              <FormDescription>Example: yoursite.com</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name='url'
@@ -58,7 +91,7 @@ export default function FormElement() {
                   size={60}
                 />
               </FormControl>
-              <FormDescription>Example: https://site.com</FormDescription>
+              <FormDescription>Example: https://yoursite.com</FormDescription>
               <FormMessage />
             </FormItem>
           )}
