@@ -25,7 +25,7 @@ export default function Home() {
         <Separator className='h-2 rounded-md' />
       </section>
       <SiteContextProvider>
-        <div className='mx-auto block max-w-[1400px] grid-cols-2 place-items-center items-start px-6 md:grid md:gap-8 lg:gap-24'>
+        <div className='mx-auto block max-w-[1450px] grid-cols-2 place-items-center items-start px-6 md:gap-8 lg:grid lg:gap-20'>
           <section className='w-full'>
             <Tabs defaultValue='form'>
               <TabsList>

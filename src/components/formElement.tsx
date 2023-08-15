@@ -11,9 +11,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { minLength, object, string, url, regex } from 'valibot'
+import { minLength, maxLength, object, string, url, regex } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useSiteContext } from '@/contexts/site-context'
+import { TITLE_MAX_CHARS, DESCRIPTION_MAX_CHARS } from '@/consts/conditions'
 
 const domainRegex =
   /^(?!https?:\/\/)(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,})(?:\/.*)?$/
@@ -24,10 +25,18 @@ const formSchema = object({
   ]),
   url: string('Please enter the URL', [url('Please enter a valid URL')]),
   title: string('Please enter the Title', [
-    minLength(4, 'Please enter a valid title')
+    minLength(10, 'Too short, the recommendation is at least 10 characters.'),
+    maxLength(
+      60,
+      'Please enter a title with fewer characters, the recommendation is 55 characters.'
+    )
   ]),
   description: string('Please enter the Description', [
-    minLength(4, 'Please enter a valid description')
+    minLength(10, 'Too short, the recommendation is at least 10 characters.'),
+    maxLength(
+      160,
+      'Please enter a description with fewer characters, the recommendation is 120 characters.'
+    )
   ])
 })
 
@@ -39,10 +48,8 @@ export default function FormElement() {
     setUrl,
     title,
     setTitle,
-    titleWidth,
     description,
-    setDescription,
-    descriptionWidth
+    setDescription
   } = useSiteContext()
   const form = useForm({
     resolver: valibotResolver(formSchema),
@@ -108,7 +115,18 @@ export default function FormElement() {
           name='title'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title {titleWidth}</FormLabel>
+              <FormLabel>
+                Title -&gt;{' '}
+                <span
+                  className={`${
+                    title.length < TITLE_MAX_CHARS
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  }`}
+                >
+                  {title.length} / {TITLE_MAX_CHARS} characters
+                </span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder='Enter the Title'
@@ -132,7 +150,18 @@ export default function FormElement() {
           name='description'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description {descriptionWidth}</FormLabel>
+              <FormLabel>
+                Description -&gt;{' '}
+                <span
+                  className={`${
+                    description.length < DESCRIPTION_MAX_CHARS
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  }`}
+                >
+                  {description.length} / {DESCRIPTION_MAX_CHARS} characters
+                </span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder='Enter the Description'

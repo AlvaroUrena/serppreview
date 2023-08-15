@@ -51,30 +51,30 @@ export default function Code() {
   }, [])
 
   return (
-    <section className='rounded-md border-2 border-border bg-accent'>
-      <pre className='relative' style={{ margin: 0 }}>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className='absolute right-0 top-0'>
-              <Button variant='outline' size='icon' onClick={copyToClipboard}>
-                {copyError ? (
-                  <ClipboardX className='h-4 w-4' />
-                ) : copied ? (
-                  <ClipboardCheck className='h-4 w-4' />
-                ) : (
-                  <ClipboardCopy className='h-4 w-4' />
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {copyError
-                  ? 'Has ocurred and error while trying to copy the code'
-                  : 'Copy'}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+    <section className='relative rounded-md border-2 border-border bg-accent'>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger className='absolute right-0 top-0'>
+            <Button variant='outline' size='icon' onClick={copyToClipboard}>
+              {copyError ? (
+                <ClipboardX className='h-4 w-4' />
+              ) : copied ? (
+                <ClipboardCheck className='h-4 w-4' />
+              ) : (
+                <ClipboardCopy className='h-4 w-4' />
+              )}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              {copyError
+                ? 'Has ocurred and error while trying to copy the code'
+                : 'Copy'}
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <pre style={{ margin: 0 }}>
         <code className='language-html'>{code}</code>
       </pre>
     </section>
